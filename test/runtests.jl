@@ -17,5 +17,6 @@ using Test
     @test Δ(f, σ, x) ≈ 4.0
 
     u(x) = @SVector [x[1]^2, x[1] * x[2]]
-    @test div(u, x) ≈ 6.0
+    @test divergence(u, x) ≈ 6.0
+    @test (∇ ⋅ (u, x)) ≈ 6.0
 end

@@ -3,7 +3,9 @@ module AutomaticCalculus
 using ForwardDiff
 using StaticArrays
 
-import Base: div
+struct Nabla end
+
+const ∇ = Nabla()
 
 export onehot,
     tuple_range,
@@ -13,7 +15,9 @@ export onehot,
     ∂,
     ∂∂,
     Δ,
-    div,
+    divergence,
+    ∇,
+    ⋅,
     grad
 
 ## Automatic differentiation
@@ -41,8 +45,10 @@ e(u, i) = x -> e(u, i, x)
 Δ(f, σ, x) = sum(k -> ∂∂(f, k, σ, k, x), index_tuple(x))
 Δ(f, σ) = x -> Δ(f, σ, x)
 
-div(f, x::AbstractArray) = sum(k -> ∂(e(f, k), k, x), index_tuple(x))
-div(f::Function) = x -> div(f, x)
+divergence(f, x::AbstractArray) = sum(k -> ∂(e(f, k), k, x), index_tuple(x))
+divergence(f::Function) = x -> divergence(f, x)
+
+⋅(::typeof(∇), t::Tuple) = divergence(t...)
 
 grad(f, x) = map(i -> ∂(f, i, x), index_tuple(x))
 grad(f) = x -> grad(f, x)

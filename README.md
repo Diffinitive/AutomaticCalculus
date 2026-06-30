@@ -43,10 +43,11 @@ Second derivatives and weighted Laplacian-style sums are available through `∂�
 Δ(f, σ, x)      # 4.0
 ```
 
-For vector-valued functions, `div` computes the divergence.
+For vector-valued functions, `divergence` computes the divergence.
 
 ```julia
 u(x) = @SVector [x[1]^2, x[1] * x[2]]
 
-div(u, x)       # 6.0
+divergence(u, x)    # 6.0
+∇ ⋅ (u, x)          # 6.0
 ```
