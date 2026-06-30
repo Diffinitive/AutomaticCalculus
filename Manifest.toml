@@ -2,14 +2,14 @@
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "a542855bb0bea8dc055aa2194af990dd10703874"
+project_hash = "10a509d644c68209b2ec601dd2686a372d8378d0"
 
 [[deps.Artifacts]]
 uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 version = "1.11.0"
 
 [[deps.AutomaticCalculus]]
-deps = ["ForwardDiff", "StaticArrays"]
+deps = ["ForwardDiff", "LinearAlgebra", "StaticArrays"]
 path = "."
 uuid = "8c525935-1fe7-4d03-8418-ce7452b6cb68"
 version = "0.1.0"
