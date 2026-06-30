@@ -2,19 +2,51 @@
 
 Small Julia helpers for calculus-style notation backed by automatic differentiation.
 
-## Local Use
-
-From another Julia project, add this package by path:
+## Installation
 
 ```julia
 using Pkg
-Pkg.develop(path="/Users/jonatan/Dropbox/julia/llm_test/AutomaticCalculus.jl")
+Pkg.add("AutomaticCalculus")
 ```
 
-Then load it with:
+## Examples
 
 ```julia
 using AutomaticCalculus
+using StaticArrays
+
+f(x) = x[1]^2 + 3x[1] * x[2] + x[2]^2
+x = @SVector [2.0, 5.0]
+
+∂(f, 1, x)    # 19.0
+∂(f, 2, x)    # 16.0
+grad(f, x)    # (19.0, 16.0)
 ```
 
-The original `include("code.jl")` workflow still works from this directory, but package loading should be preferred for new projects.
+Operators can also be partially applied.
+
+```julia
+dfdx = ∂(f, 1)
+dfdx(x)       # 19.0
+
+gradient = grad(f)
+gradient(x)   # (19.0, 16.0)
+```
+
+Second derivatives and weighted Laplacian-style sums are available through `∂∂` and `Δ`.
+
+```julia
+σ(x) = one(eltype(x))
+
+∂∂(f, 1, 1, x)  # 2.0
+∂∂(f, 1, 2, x)  # 3.0
+Δ(f, σ, x)      # 4.0
+```
+
+For vector-valued functions, `div` computes the divergence.
+
+```julia
+u(x) = @SVector [x[1]^2, x[1] * x[2]]
+
+div(u, x)       # 6.0
+```
