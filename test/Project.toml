@@ -1,0 +1,10 @@
+[deps]
+AutomaticCalculus = "8c525935-1fe7-4d03-8418-ce7452b6cb68"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[sources]
+AutomaticCalculus = {path = ".."}
+
+[compat]
+StaticArrays = "1"
