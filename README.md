@@ -20,7 +20,7 @@ x = @SVector [2.0, 5.0]
 
 ∂(f, 1, x)    # 19.0
 ∂(f, 2, x)    # 16.0
-grad(f, x)    # (19.0, 16.0)
+∇(f, x)    # (19.0, 16.0)
 ```
 
 Operators can also be partially applied.
@@ -29,8 +29,8 @@ Operators can also be partially applied.
 dfdx = ∂(f, 1)
 dfdx(x)       # 19.0
 
-gradient = grad(f)
-gradient(x)   # (19.0, 16.0)
+∇f = ∇(f)
+∇f(x)   # (19.0, 16.0)
 ```
 
 Second derivatives and weighted Laplacian-style sums are available through `∂∂` and `Δ`.
