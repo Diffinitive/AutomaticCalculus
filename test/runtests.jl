@@ -6,7 +6,7 @@ using Test
     f(x) = x[1]^2 + 3x[1] * x[2] + x[2]^2
     x = @SVector [2.0, 5.0]
 
-    @test onehot(2, 3) == @SVector [0, 1, 0]
+    @test AutomaticCalculus.onehot(2, 3) == @SVector [0, 1, 0]
     @test δ(1, 1) == 1
     @test δ(1, 2) == 0
     @test ∂(f, 1, x) ≈ 19.0

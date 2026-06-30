@@ -3,17 +3,14 @@ module AutomaticCalculus
 using ForwardDiff
 using StaticArrays
 
-export onehot,
-    tuple_range,
-    index_tuple,
-    δ,
-    e,
-    ∂,
-    ∂∂,
-    Δ,
-    divergence,
-    ∇,
-    ⋅,
+export δ
+export e
+export ∂
+export ∂∂
+export Δ
+export divergence
+export ∇
+export ⋅
 
 ## Automatic differentiation
 onehot(k, N) = SVector(ntuple(i -> k == i ? 1 : 0, N))
