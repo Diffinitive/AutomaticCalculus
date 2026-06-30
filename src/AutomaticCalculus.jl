@@ -3,6 +3,8 @@ module AutomaticCalculus
 using ForwardDiff
 using StaticArrays
 
+import LinearAlgebra: ⋅
+
 export δ
 export e
 export ∂
