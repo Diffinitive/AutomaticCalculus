@@ -74,3 +74,18 @@ You can also skip them individually:
 Pkg.test("AutomaticCalculus"; test_args=["--skip-aqua"])
 Pkg.test("AutomaticCalculus"; test_args=["--skip-jet"])
 ```
+
+## Documentation
+
+The docs are built with `Documenter.jl` into HTML under `docs/build/`.
+Build them from the repository root with:
+
+```julia
+julia --project=docs docs/make.jl
+```
+
+To build and open the generated HTML in your browser:
+
+```julia
+julia --project=docs docs/make.jl --open
+```
