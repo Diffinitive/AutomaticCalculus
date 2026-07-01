@@ -1,7 +1,9 @@
 # AutomaticCalculus
 
-AutomaticCalculus provides a small set of calculus-flavored helpers on top of
-`ForwardDiff` and `StaticArrays`.
+AutomaticCalculus provides concise notation for calculus operations on Julia
+functions. It is based on `ForwardDiff` and `StaticArrays`. The package was
+created mainly to help write tests for PDE solvers, but it is broadly
+applicable.
 
 The package is intentionally narrow in scope:
 

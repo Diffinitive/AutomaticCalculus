@@ -2,7 +2,11 @@
 
 <img src="docs/src/assets/logo.svg" alt="AutomaticCalculus logo" width="180" align="right">
 
-AutomaticCalculus provides concise notation for calculus operations on native Julia functions. It is based on `ForwardDiff`. The package was created mainly to help write tests for PDE solvers, but it is broadly applicable. While performance is not a main objective, the goal is to avoid unnecessary type instability and allocation.
+AutomaticCalculus provides concise notation for calculus operations on Julia
+functions. It is based on `ForwardDiff`. The package was created mainly to
+help write tests for PDE solvers, but it is broadly applicable. While
+performance is not a main objective, the goal is to avoid unnecessary type
+instability and allocation.
 
 ## Installation
 
