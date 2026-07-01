@@ -1,5 +1,7 @@
 # AutomaticCalculus
 
+![AutomaticCalculus logo](docs/src/assets/logo.svg)
+
 Small Julia helpers for calculus-style notation backed by automatic differentiation.
 
 ## Installation
