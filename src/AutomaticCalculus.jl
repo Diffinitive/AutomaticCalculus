@@ -3,6 +3,7 @@ module AutomaticCalculus
 using ForwardDiff
 using StaticArrays
 
+using LinearAlgebra
 import LinearAlgebra: ⋅, ×
 
 export δ
@@ -87,10 +88,7 @@ The weighted form computes the sum over the coordinates of `x` of
 
 The curried forms return a function of `x`.
 """
-function Δ(f, x::AbstractArray)
-    h = H(f, x)
-    return sum(k -> h[k, k], index_tuple(x))
-end
+Δ(f, x::AbstractArray) = tr(H(f, x))
 Δ(f) = x -> Δ(f, x)
 
 Δ(f, σ, x::AbstractArray) = sum(k -> ∂∂(f, k, σ, k, x), index_tuple(x))
