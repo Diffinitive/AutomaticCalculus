@@ -65,10 +65,10 @@ The weighted form computes the derivative of `σ(x) * ∂(f, j, x)` with respect
 to coordinate `i`.
 """
 ∂∂(f, i, j, x::AbstractArray) = ∂(∂(f, j), i, x)
-∂∂(f, i, j) = x -> ∂∂(f, i, j, x::AbstractArray)
+∂∂(f, i, j) = x -> ∂∂(f, i, j, x)
 
 ∂∂(f, i, σ, j, x::AbstractArray) = ∂(x -> σ(x) * ∂(f, j, x), i, x)
-∂∂(f, i, σ, j) = x -> ∂∂(f, i, σ, j, x::AbstractArray)
+∂∂(f, i, σ, j) = x -> ∂∂(f, i, σ, j, x)
 
 """
     Δ(f, σ, x)
