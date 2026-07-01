@@ -1,5 +1,6 @@
 using AutomaticCalculus
 using AllocCheck: check_allocs
+using LinearAlgebra: norm
 using StaticArrays
 using Test
 
@@ -18,7 +19,9 @@ end
 
 @testset "AutomaticCalculus" begin
     f(x) = x[1]^2 + 3x[1] * x[2] + x[2]^2
+    g(x) = norm(@SVector [sin(x[1]), x[1] * x[2]])
     u(x) = @SVector [x[1]^2, x[1] * x[2]]
+    v(x) = @SVector [sin(x[1] * x[2]), norm(x)]
     σ(x) = one(eltype(x))
 
     x = @SVector [2.0, 5.0]
@@ -53,6 +56,14 @@ end
         @test ∂(f, 1)(x) ≈ 19.0
         @test ∇(f, x) == [∂(f, 1, x), ∂(f, 2, x)]
         @test ∇(f)(x) == [∂(f, 1, x), ∂(f, 2, x)]
+        @test ∂(g, 1, x) ≈ (sin(x[1]) * cos(x[1]) + x[1] * x[2]^2) / g(x)
+        @test ∂(g, 2, x) ≈ x[1]^2 * x[2] / g(x)
+        @test ∂(g, 1)(x) ≈ (sin(x[1]) * cos(x[1]) + x[1] * x[2]^2) / g(x)
+        @test ∇(g, x) ≈ [
+            (sin(x[1]) * cos(x[1]) + x[1] * x[2]^2) / g(x),
+            x[1]^2 * x[2] / g(x),
+        ]
+        @test ∇(g)(x) ≈ ∇(g, x)
 
         @test ∂∂(f, 1, 1, x) ≈ 2.0
         @test ∂∂(f, 1, 1)(x) ≈ 2.0
@@ -64,11 +75,16 @@ end
         @test divergence(u, x) ≈ 6.0
         @test divergence(u)(x) ≈ 6.0
         @test (∇ ⋅ (u, x)) ≈ 6.0
+        @test divergence(v, x) ≈ x[2] * cos(x[1] * x[2]) + x[2] / norm(x)
+        @test divergence(v)(x) ≈ x[2] * cos(x[1] * x[2]) + x[2] / norm(x)
+        @test (∇ ⋅ (v, x)) ≈ x[2] * cos(x[1] * x[2]) + x[2] / norm(x)
     end
 
     @testset "AllocCheck" begin
         F = typeof(f)
+        G = typeof(g)
         U = typeof(u)
+        V = typeof(v)
         Σ = typeof(σ)
         Point = SVector{2,Float64}
 
@@ -78,20 +94,27 @@ end
             @test no_allocs(∂, (F, Point, Point))
             @test no_allocs(∂, (F, Int, Point))
             @test no_allocs(∇, (F, Point))
+            @test no_allocs(∂, (G, Int, Point))
+            @test no_allocs(∇, (G, Point))
             @test no_allocs(∂∂, (F, Int, Int, Point))
             @test no_allocs(∂∂, (F, Int, Σ, Int, Point))
             @test no_allocs(Δ, (F, Σ, Point))
             @test no_allocs(divergence, (U, Point))
+            @test no_allocs(divergence, (V, Point))
             @test no_allocs(⋅, (typeof(∇), Tuple{U, Point}))
+            @test no_allocs(⋅, (typeof(∇), Tuple{V, Point}))
         end
 
         @testset "Curried calls" begin
             @test no_allocs(∂(f, 1), (Point,))
             @test no_allocs(∇(f), (Point,))
+            @test no_allocs(∂(g, 1), (Point,))
+            @test no_allocs(∇(g), (Point,))
             @test no_allocs(∂∂(f, 1, 1), (Point,))
             @test no_allocs(∂∂(f, 1, σ, 1), (Point,))
             @test no_allocs(Δ(f, σ), (Point,))
             @test no_allocs(divergence(u), (Point,))
+            @test no_allocs(divergence(v), (Point,))
         end
     end
 end
