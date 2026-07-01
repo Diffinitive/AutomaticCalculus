@@ -51,3 +51,26 @@ u(x) = @SVector [x[1]^2, x[1] * x[2]]
 divergence(u, x)    # 6.0
 ∇ ⋅ (u, x)          # 6.0
 ```
+
+## Running Tests
+
+Run the package test suite with `Pkg.test`:
+
+```julia
+using Pkg
+Pkg.test("AutomaticCalculus")
+```
+
+The test run includes the normal package tests plus Aqua and JET checks.
+To skip the Aqua and JET suites, pass `test_args`:
+
+```julia
+Pkg.test("AutomaticCalculus"; test_args=["--skip-aqua-jet"])
+```
+
+You can also skip them individually:
+
+```julia
+Pkg.test("AutomaticCalculus"; test_args=["--skip-aqua"])
+Pkg.test("AutomaticCalculus"; test_args=["--skip-jet"])
+```
