@@ -76,20 +76,26 @@ no_allocs(func, types) = isempty(check_allocs(func, types))
 
     Point = SVector{2,Float64}
 
-    @test no_allocs(δ, (Int, Int))
-    @test no_allocs(e, (U, Int, Point))
-    @test no_allocs(∂, (F, Point, Point))
-    @test no_allocs(∂, (F, Int, Point))
-    @test no_allocs(∂(f, 1), (Point,))
-    @test no_allocs(∇, (F, Point))
-    @test no_allocs(∇(f), (Point,))
-    @test no_allocs(∂∂, (F, Int, Int, Point))
-    @test no_allocs(∂∂, (F, Int, Σ, Int, Point))
-    @test no_allocs(∂∂(f, 1, 1), (Point,))
-    @test no_allocs(∂∂(f, 1, σ, 1), (Point,))
-    @test no_allocs(Δ, (F, Σ, Point))
-    @test no_allocs(Δ(f, σ), (Point,))
-    @test no_allocs(divergence, (U, Point))
-    @test no_allocs(divergence(u), (Point,))
-    @test no_allocs(⋅, (typeof(∇), Tuple{U, Point}))
+    @testset "Regular calls" begin
+        @test no_allocs(δ, (Int, Int))
+        @test no_allocs(e, (U, Int, Point))
+
+        @test no_allocs(∂, (F, Point, Point))
+        @test no_allocs(∂, (F, Int, Point))
+        @test no_allocs(∇, (F, Point))
+        @test no_allocs(∂∂, (F, Int, Int, Point))
+        @test no_allocs(∂∂, (F, Int, Σ, Int, Point))
+        @test no_allocs(Δ, (F, Σ, Point))
+        @test no_allocs(divergence, (U, Point))
+        @test no_allocs(⋅, (typeof(∇), Tuple{U, Point}))
+    end
+
+    @testset "Closure calls" begin
+        @test no_allocs(∂(f, 1), (Point,))
+        @test no_allocs(∇(f), (Point,))
+        @test no_allocs(∂∂(f, 1, 1), (Point,))
+        @test no_allocs(∂∂(f, 1, σ, 1), (Point,))
+        @test no_allocs(Δ(f, σ), (Point,))
+        @test no_allocs(divergence(u), (Point,))
+    end
 end
