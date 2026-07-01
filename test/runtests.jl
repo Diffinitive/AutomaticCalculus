@@ -1,4 +1,6 @@
+using Aqua
 using AutomaticCalculus
+using JET
 using StaticArrays
 using Test
 
@@ -19,4 +21,16 @@ using Test
     u(x) = @SVector [x[1]^2, x[1] * x[2]]
     @test divergence(u, x) ≈ 6.0
     @test (∇ ⋅ (u, x)) ≈ 6.0
+end
+
+@testset "Aqua" begin
+    Aqua.test_all(AutomaticCalculus)
+end
+
+@testset "JET" begin
+    JET.test_package(
+        AutomaticCalculus;
+        target_modules = (AutomaticCalculus,),
+        toplevel_logger = nothing,
+    )
 end
