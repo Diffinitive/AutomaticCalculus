@@ -18,10 +18,14 @@ The package is intentionally narrow in scope:
 - `e(u, i, x)`: `i`th component of a vector-valued function
 - `∂`: directional and partial derivatives
 - `∂∂`: second derivatives, including weighted variants
-- `Δ`: weighted Laplacian-style sum
+- `Δ`: Laplacian and weighted Laplacian-style sum
 - `∇`: gradient
+- `H`: Hessian matrix of a scalar-valued function
+- `J`: Jacobian matrix of a vector-valued function
 - `divergence`: divergence of a vector-valued function
+- `rot`: scalar curl in 2D or curl vector in 3D
 - `⋅`: convenience overload for `∇ ⋅ (u, x)`
+- `×`: convenience overload for `∇ × (u, x)`
 
 ## Examples
 
@@ -35,14 +39,19 @@ x = @SVector [2.0, 5.0]
 ∂(f, 1, x)          # 19.0
 ∂(f, 2, x)          # 16.0
 ∇(f, x)             # (19.0, 16.0)
+H(f, x)             # [2.0 3.0; 3.0 2.0]
+Δ(f, x)             # 4.0
 Δ(f, x -> one(eltype(x)), x)
 ```
 
 ```julia
 u(x) = @SVector [x[1]^2, x[1] * x[2]]
 
+J(u, x)             # [4.0 0.0; 5.0 2.0]
 divergence(u, x)    # 6.0
 ∇ ⋅ (u, x)          # 6.0
+rot(u, x)           # 5.0
+∇ × (u, x)          # 5.0
 ```
 
 ## API
@@ -53,7 +62,11 @@ e
 ∂
 ∂∂
 Δ
-divergence
 ∇
+H
+J
+divergence
+rot
 ⋅
+×
 ```

@@ -39,23 +39,31 @@ dfdx(x)       # 19.0
 ∇f(x)   # (19.0, 16.0)
 ```
 
-Second derivatives and weighted Laplacian-style sums are available through `∂∂` and `Δ`.
+Second derivatives, Hessians, and Laplacians are available through `∂∂`, `H`,
+and `Δ`. The same `Δ` operator also has a weighted form.
 
 ```julia
 σ(x) = one(eltype(x))
 
 ∂∂(f, 1, 1, x)  # 2.0
 ∂∂(f, 1, 2, x)  # 3.0
+H(f, x)         # [2.0 3.0; 3.0 2.0]
+Δ(f, x)         # 4.0
 Δ(f, σ, x)      # 4.0
 ```
 
-For vector-valued functions, `divergence` computes the divergence.
+For vector-valued functions, `J` computes the Jacobian matrix, `divergence`
+computes the divergence, and `rot` computes the scalar curl in 2D or the curl
+vector in 3D.
 
 ```julia
 u(x) = @SVector [x[1]^2, x[1] * x[2]]
 
+J(u, x)             # [4.0 0.0; 5.0 2.0]
 divergence(u, x)    # 6.0
 ∇ ⋅ (u, x)          # 6.0
+rot(u, x)           # 5.0
+∇ × (u, x)          # 5.0
 ```
 
 ## Running Tests
