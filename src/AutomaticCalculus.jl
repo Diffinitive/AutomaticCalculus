@@ -66,8 +66,4 @@ function _smatrix(f, n, m)
     end |> SMatrix{n, m}
 end
 
-function _smatrix(tt::NTuple{N, NTuple{M, Any}}) where {N, M}
-    return _smatrix((i, j) -> tt[i][j], N, M)
-end
-
 end
