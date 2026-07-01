@@ -67,25 +67,29 @@ no_allocs(func, types) = isempty(check_allocs(func, types))
 
 @testset "AllocCheck" begin
     f(x) = x[1]^2 + 3x[1] * x[2] + x[2]^2
-    x = @SVector [2.0, 5.0]
-    d = @SVector [1.0, 0.0]
     u(x) = @SVector [x[1]^2, x[1] * x[2]]
     σ(x) = one(eltype(x))
 
+    F = typeof(f)
+    U = typeof(u)
+    Σ = typeof(σ)
+
+    Point = SVector{2,Float64}
+
     @test no_allocs(δ, (Int, Int))
-    @test no_allocs(e, (typeof(u), Int, SVector{2,Float64}))
-    @test no_allocs(∂, (typeof(f), SVector{2,Float64}, SVector{2,Float64}))
-    @test no_allocs(∂, (typeof(f), Int, SVector{2,Float64}))
-    @test no_allocs(∂(f, 1), (SVector{2,Float64},))
-    @test no_allocs(∇, (typeof(f), SVector{2,Float64}))
-    @test no_allocs(∇(f), (SVector{2,Float64},))
-    @test no_allocs(∂∂, (typeof(f), Int, Int, SVector{2,Float64}))
-    @test no_allocs(∂∂, (typeof(f), Int, typeof(σ), Int, SVector{2,Float64}))
-    @test no_allocs(∂∂(f, 1, 1), (SVector{2,Float64},))
-    @test no_allocs(∂∂(f, 1, σ, 1), (SVector{2,Float64},))
-    @test no_allocs(Δ, (typeof(f), typeof(σ), SVector{2,Float64}))
-    @test no_allocs(Δ(f, σ), (SVector{2,Float64},))
-    @test no_allocs(divergence, (typeof(u), SVector{2,Float64}))
-    @test no_allocs(divergence(u), (SVector{2,Float64},))
-    @test no_allocs(⋅, (typeof(∇), Tuple{typeof(u), SVector{2,Float64}}))
+    @test no_allocs(e, (U, Int, Point))
+    @test no_allocs(∂, (F, Point, Point))
+    @test no_allocs(∂, (F, Int, Point))
+    @test no_allocs(∂(f, 1), (Point,))
+    @test no_allocs(∇, (F, Point))
+    @test no_allocs(∇(f), (Point,))
+    @test no_allocs(∂∂, (F, Int, Int, Point))
+    @test no_allocs(∂∂, (F, Int, Σ, Int, Point))
+    @test no_allocs(∂∂(f, 1, 1), (Point,))
+    @test no_allocs(∂∂(f, 1, σ, 1), (Point,))
+    @test no_allocs(Δ, (F, Σ, Point))
+    @test no_allocs(Δ(f, σ), (Point,))
+    @test no_allocs(divergence, (U, Point))
+    @test no_allocs(divergence(u), (Point,))
+    @test no_allocs(⋅, (typeof(∇), Tuple{U, Point}))
 end
