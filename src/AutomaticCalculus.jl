@@ -15,7 +15,6 @@ export ∇
 export ⋅
 
 ## Automatic differentiation
-Base.@constprop :aggressive onehot(k, N) = SVector(ntuple(i -> k == i ? 1 : 0, N))
 tuple_range(n) = ntuple(identity, n)
 index_tuple(x) = tuple_range(length(x))
 
@@ -47,10 +46,10 @@ derivative with respect to coordinate `i`.
 
 The curried forms return a function of `x`.
 """
-∂(f, d::AbstractArray, x) = ForwardDiff.derivative(s -> f(x + s * d), 0)
+∂(f, d::AbstractArray, x) = d⋅∇(f,x)
 ∂(f, d::AbstractArray) = x -> ∂(f, d, x)
 
-∂(f, i::Int, x) = ∂(f, onehot(i, length(x)), x)
+∂(f, i::Int, x) = ∇(f,x)[i]
 ∂(f, i::Int) = x -> ∂(f, i, x)
 
 """
@@ -86,7 +85,7 @@ Weighted Laplacian-style sum over the coordinates of `x`.
 Gradient of `f` with respect to the coordinates of `x`.
 The curried form returns a function of `x`.
 """
-∇(f, x) = map(i -> ∂(f, i, x), index_tuple(x))
+∇(f, x) = ForwardDiff.gradient(f, x)
 ∇(f) = x -> ∇(f, x)
 
 """

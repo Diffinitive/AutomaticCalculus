@@ -41,7 +41,6 @@ end
     end
 
     @testset "Correctness" begin
-        @test AutomaticCalculus.onehot(2, 3) == @SVector [0, 1, 0]
         @test δ(1, 1) == 1
         @test δ(1, 2) == 0
 
@@ -52,8 +51,8 @@ end
         @test ∂(f, d, x) ≈ 19.0
         @test ∂(f, 2, x) ≈ 16.0
         @test ∂(f, 1)(x) ≈ 19.0
-        @test ∇(f, x) == (∂(f, 1, x), ∂(f, 2, x))
-        @test ∇(f)(x) == (∂(f, 1, x), ∂(f, 2, x))
+        @test ∇(f, x) == [∂(f, 1, x), ∂(f, 2, x)]
+        @test ∇(f)(x) == [∂(f, 1, x), ∂(f, 2, x)]
 
         @test ∂∂(f, 1, 1, x) ≈ 2.0
         @test ∂∂(f, 1, 1)(x) ≈ 2.0
