@@ -50,51 +50,57 @@ end
         @test δ(1, 2) == 0
 
         @test e(u, 1, x) == 4.0
-        @test e(u, 1)(x) == 4.0
 
         @test ∂(f, 1, x) ≈ 19.0
         @test ∂(f, d, x) ≈ 19.0
         @test ∂(f, 2, x) ≈ 16.0
-        @test ∂(f, 1)(x) ≈ 19.0
         @test ∇(f, x) == [∂(f, 1, x), ∂(f, 2, x)]
-        @test ∇(f)(x) == [∂(f, 1, x), ∂(f, 2, x)]
         @test ∂(g, 1, x) ≈ (sin(x[1]) * cos(x[1]) + x[1] * x[2]^2) / g(x)
         @test ∂(g, 2, x) ≈ x[1]^2 * x[2] / g(x)
-        @test ∂(g, 1)(x) ≈ (sin(x[1]) * cos(x[1]) + x[1] * x[2]^2) / g(x)
         @test ∇(g, x) ≈ [
             (sin(x[1]) * cos(x[1]) + x[1] * x[2]^2) / g(x),
             x[1]^2 * x[2] / g(x),
         ]
-        @test ∇(g)(x) ≈ ∇(g, x)
 
         @test ∂∂(f, 1, 1, x) ≈ 2.0
-        @test ∂∂(f, 1, 1)(x) ≈ 2.0
         @test ∂∂(f, 1, σ, 1, x) ≈ 2.0
-        @test ∂∂(f, 1, σ, 1)(x) ≈ 2.0
         @test H(f, x) ≈ @SMatrix [2.0 3.0; 3.0 2.0]
-        @test H(f)(x) ≈ @SMatrix [2.0 3.0; 3.0 2.0]
 
         @test Δ(f, x) ≈ 4.0
-        @test Δ(f)(x) ≈ 4.0
         @test Δ(f, σ, x) ≈ 4.0
-        @test Δ(f, σ)(x) ≈ 4.0
         @test J(u, x) ≈ @SMatrix [4.0 0.0; 5.0 2.0]
-        @test J(u)(x) ≈ @SMatrix [4.0 0.0; 5.0 2.0]
         @test divergence(u, x) ≈ 6.0
-        @test divergence(u)(x) ≈ 6.0
         @test (∇ ⋅ (u, x)) ≈ 6.0
         @test divergence(v, x) ≈ x[2] * cos(x[1] * x[2]) + x[2] / norm(x)
-        @test divergence(v)(x) ≈ x[2] * cos(x[1] * x[2]) + x[2] / norm(x)
         @test (∇ ⋅ (v, x)) ≈ x[2] * cos(x[1] * x[2]) + x[2] / norm(x)
         @test rot(u, x) ≈ x[2]
-        @test rot(u)(x) ≈ x[2]
         @test (∇ × (u, x)) ≈ x[2]
         @test rot(v, x) ≈ x[1] / norm(x) - x[1] * cos(x[1] * x[2])
-        @test rot(v)(x) ≈ x[1] / norm(x) - x[1] * cos(x[1] * x[2])
         @test (∇ × (v, x)) ≈ x[1] / norm(x) - x[1] * cos(x[1] * x[2])
         @test rot(w, y) ≈ @SVector [-2y[3], -2y[1], -2y[2]]
-        @test rot(w)(y) ≈ @SVector [-2y[3], -2y[1], -2y[2]]
         @test (∇ × (w, y)) ≈ @SVector [-2y[3], -2y[1], -2y[2]]
+    end
+
+    @testset "Curried correctness" begin
+        @test e(u, 1)(x) == 4.0
+
+        @test ∂(f, 1)(x) ≈ 19.0
+        @test ∇(f)(x) == [∂(f, 1, x), ∂(f, 2, x)]
+        @test ∂(g, 1)(x) ≈ (sin(x[1]) * cos(x[1]) + x[1] * x[2]^2) / g(x)
+        @test ∇(g)(x) ≈ ∇(g, x)
+
+        @test ∂∂(f, 1, 1)(x) ≈ 2.0
+        @test ∂∂(f, 1, σ, 1)(x) ≈ 2.0
+        @test H(f)(x) ≈ @SMatrix [2.0 3.0; 3.0 2.0]
+
+        @test Δ(f)(x) ≈ 4.0
+        @test Δ(f, σ)(x) ≈ 4.0
+        @test J(u)(x) ≈ @SMatrix [4.0 0.0; 5.0 2.0]
+        @test divergence(u)(x) ≈ 6.0
+        @test divergence(v)(x) ≈ x[2] * cos(x[1] * x[2]) + x[2] / norm(x)
+        @test rot(u)(x) ≈ x[2]
+        @test rot(v)(x) ≈ x[1] / norm(x) - x[1] * cos(x[1] * x[2])
+        @test rot(w)(y) ≈ @SVector [-2y[3], -2y[1], -2y[2]]
     end
 
     @testset "AllocCheck" begin
