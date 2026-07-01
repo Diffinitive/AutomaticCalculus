@@ -32,8 +32,8 @@ x = @SVector [2.0, 5.0]
 Operators can also be partially applied.
 
 ```julia
-dfdx = ∂(f, 1)
-dfdx(x)       # 19.0
+∂₁f = ∂(f, 1)
+∂₁f(x)  # 19.0
 
 ∇f = ∇(f)
 ∇f(x)   # (19.0, 16.0)
