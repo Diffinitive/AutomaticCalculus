@@ -1,8 +1,33 @@
-using Aqua
 using AutomaticCalculus
-using JET
 using StaticArrays
 using Test
+
+const skip_aqua = "--skip-aqua" in ARGS || "--skip-aqua-jet" in ARGS
+const skip_jet = "--skip-jet" in ARGS || "--skip-aqua-jet" in ARGS
+
+if !skip_aqua
+    using Aqua
+end
+
+if !skip_jet
+    using JET
+end
+
+if !skip_aqua
+    @testset "Aqua" begin
+        Aqua.test_all(AutomaticCalculus)
+    end
+end
+
+if !skip_jet
+    @testset "JET" begin
+        JET.test_package(
+            AutomaticCalculus;
+            target_modules = (AutomaticCalculus,),
+            toplevel_logger = nothing,
+        )
+    end
+end
 
 @testset "AutomaticCalculus" begin
     f(x) = x[1]^2 + 3x[1] * x[2] + x[2]^2
@@ -21,16 +46,4 @@ using Test
     u(x) = @SVector [x[1]^2, x[1] * x[2]]
     @test divergence(u, x) ≈ 6.0
     @test (∇ ⋅ (u, x)) ≈ 6.0
-end
-
-@testset "Aqua" begin
-    Aqua.test_all(AutomaticCalculus)
-end
-
-@testset "JET" begin
-    JET.test_package(
-        AutomaticCalculus;
-        target_modules = (AutomaticCalculus,),
-        toplevel_logger = nothing,
-    )
 end
