@@ -105,17 +105,6 @@ Convenience overload for `∇ ⋅ (u, x)`, which calls `divergence(u, x)`.
 """
 ⋅(::typeof(∇), t::Tuple) = divergence(t...)
 
-# function J(f, x)
-#     n = length(f(zero(x)))
-#     m = length(x)
-#
-#     _smatrix(n,m) do i,j
-#         @inline
-#         ∂(e(f,i),j,x)
-#     end
-# end
-# TBD: Can the above be made type-stable?
-
 ## Helpers
 function _smatrix(f, n, m)
     map(ntuple(k -> (mod1(k, n), fld1(k, n)), n * m)) do (i, j)
