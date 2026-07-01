@@ -1,6 +1,6 @@
 # AutomaticCalculus
 
-![AutomaticCalculus logo](docs/src/assets/logo.svg)
+<img src="docs/src/assets/logo.svg" alt="AutomaticCalculus logo" width="180" align="right">
 
 Small Julia helpers for calculus-style notation backed by automatic differentiation.
 
