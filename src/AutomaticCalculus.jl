@@ -171,12 +171,4 @@ Convenience overload for `∇ × (u, x)`, which calls `rot(u, x)`.
 """
 ×(::typeof(∇), t::Tuple) = rot(t...)
 
-## Helpers
-function _smatrix(f, n, m)
-    map(ntuple(k -> (mod1(k, n), fld1(k, n)), n * m)) do (i, j)
-        @inline
-        f(i, j)
-    end |> SMatrix{n, m}
-end
-
 end
