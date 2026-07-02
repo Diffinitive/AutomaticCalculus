@@ -2,3 +2,6 @@
 AutomaticCalculus = "8c525935-1fe7-4d03-8418-ce7452b6cb68"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+
+[compat]
+Documenter = "1.16"
