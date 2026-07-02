@@ -31,7 +31,7 @@ jobs:
           version: "1.12"
 
       - name: Cache Julia artifacts
-        uses: julia-actions/cache@v6.1.0
+        uses: julia-actions/cache@v3
 
       - name: Remove machine-specific docs manifest
         run: rm -f docs/Manifest.toml
