@@ -2,7 +2,7 @@
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "597be58c180b1b22cbdaf6d8134266b2621d7951"
+project_hash = "5c7903dd0d57662e1ee8c77489f73fbab0e52f19"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -38,7 +38,7 @@ version = "1.11.0"
 deps = ["ForwardDiff", "LinearAlgebra", "StaticArrays"]
 path = "."
 uuid = "8c525935-1fe7-4d03-8418-ce7452b6cb68"
-version = "0.1.0"
+version = "0.1.1"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
