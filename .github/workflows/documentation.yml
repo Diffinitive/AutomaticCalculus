@@ -33,9 +33,6 @@ jobs:
       - name: Cache Julia artifacts
         uses: julia-actions/cache@v3
 
-      - name: Remove machine-specific docs manifest
-        run: rm -f docs/Manifest.toml
-
       - name: Prepare docs environment
         run: julia --project=docs -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
 
