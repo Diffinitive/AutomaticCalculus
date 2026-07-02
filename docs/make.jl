@@ -1,10 +1,12 @@
 using Documenter
 using AutomaticCalculus
 
+const on_ci = get(ENV, "CI", "false") == "true"
+
 makedocs(
     sitename = "AutomaticCalculus",
     modules = [AutomaticCalculus],
-    format = Documenter.HTML(prettyurls = false, disable_git = true, edit_link = nothing, repolink = nothing),
+    format = Documenter.HTML(prettyurls = on_ci, disable_git = true, edit_link = nothing, repolink = nothing),
     pages = ["Home" => "index.md"],
     remotes = nothing,
 )
