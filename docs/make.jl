@@ -5,8 +5,10 @@ const on_ci = get(ENV, "CI", "false") == "true"
 
 
 config = if(on_ci)
+    println("Using CI config.")
     Documenter.HTML()
 else
+    println("Using local config.")
     Documenter.HTML(prettyurls = false, disable_git = true, edit_link = nothing, repolink = nothing)
 end
 
