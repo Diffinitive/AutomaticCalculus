@@ -1,5 +1,7 @@
 # AutomaticCalculus
 
+[![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](https://diffinitive.github.io/AutomaticCalculus/)
+
 <img src="docs/src/assets/logo.svg" alt="AutomaticCalculus logo" width="180" align="right">
 
 AutomaticCalculus provides concise notation for calculus operations on Julia
