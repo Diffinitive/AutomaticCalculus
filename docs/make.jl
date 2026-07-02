@@ -2,11 +2,15 @@ using Documenter
 using AutomaticCalculus
 
 const on_ci = get(ENV, "CI", "false") == "true"
+const github_repository = get(ENV, "GITHUB_REPOSITORY", "diffinitive/AutomaticCalculus")
 
 
-config = if(on_ci)
+config = if on_ci
     println("Using CI config.")
-    Documenter.HTML()
+    Documenter.HTML(
+        repolink = "https://github.com/$github_repository",
+        edit_link = "main",
+    )
 else
     println("Using local config.")
     Documenter.HTML(prettyurls = false, disable_git = true, edit_link = nothing, repolink = nothing)
