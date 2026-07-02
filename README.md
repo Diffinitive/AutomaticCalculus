@@ -28,7 +28,7 @@ x = @SVector [2.0, 5.0]
 
 ∂(f, 1, x)    # 19.0
 ∂(f, 2, x)    # 16.0
-∇(f, x)    # (19.0, 16.0)
+∇(f, x)       # [19.0, 16.0]
 ```
 
 Operators can also be partially applied.
@@ -38,7 +38,7 @@ Operators can also be partially applied.
 ∂₁f(x)  # 19.0
 
 ∇f = ∇(f)
-∇f(x)   # (19.0, 16.0)
+∇f(x)   # [19.0, 16.0]
 ```
 
 Second derivatives, Hessians, and Laplacians are available through `∂∂`, `H`,
